@@ -1,0 +1,30 @@
+from django.db import models
+
+
+class Evento(models.Model):
+    nombre = models.CharField(max_length=200)
+    tipo = models.CharField(max_length=50)
+    cliente = models.CharField(max_length=200)
+    fecha_hora = models.DateTimeField()
+    lugar = models.CharField(max_length=200)
+    plazo_limite = models.DateField()
+
+    def __str__(self):
+        return self.nombre
+
+
+
+
+class Subtarea(models.Model):
+    evento = models.ForeignKey(
+        Evento,
+        on_delete=models.CASCADE,
+        related_name='subtareas'
+    )
+    nombre = models.CharField(max_length=200)
+    plazo = models.DateField()
+    horas_estimadas = models.DecimalField(max_digits=5, decimal_places=2)
+    estado = models.CharField(max_length=20, default='pendiente')
+
+    def __str__(self):
+        return self.nombre
